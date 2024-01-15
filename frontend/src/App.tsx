@@ -1,5 +1,11 @@
+import UserActionPage from "./pages/UserActionPage";
+
 function App() {
-  return (<div>Hello world</div>);
+  return (
+    <main className="app">
+      <UserActionPage />
+    </main>
+  );
 }
 
 export default App;
