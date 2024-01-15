@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from "react";
 import { InputParams } from "../interfaces/FormInterface";
+import { CiMinimize1 } from "react-icons/ci";
 
 interface FormInputParams extends InputParams {
 	value: string;
@@ -26,6 +27,13 @@ function FormInput(prop: FormInputParams) {
 				{errors.map((err, i) => (
 					<li key={i}>{err}</li>
 				))}
+				<button
+					type="button"
+					className="close-info"
+					onClick={() => setFocused(false)}
+				>
+					<CiMinimize1 />
+				</button>
 			</ul>
 		</div>
 	);
