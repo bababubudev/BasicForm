@@ -1,4 +1,40 @@
-input{
-  font-size: 1rem;
-  padding: 0.5rem;
+.input-wrapper {
+  display: grid;
+  gap: 0.5ch;
+
+  label {
+    color: white;
+    font-size: 0.85em;
+    font-weight: 600;
+    letter-spacing: 0.05rem;
+  }
+
+  input{
+    font-size: 1em;
+    border-radius: .5ch;
+    border: none;
+
+    padding: 1rem;
+
+    &:invalid[data-was-focused="true"] {
+      border: 2px solid red;
+      outline: none;
+
+      & ~ ul {
+        display: block;
+      }
+    }
+  }
+
+  .info-box {
+    display: none;
+
+    color: red;
+    padding-inline: 3ch;
+    list-style-type: "•   ";
+
+    li {
+      font-size: 0.9em;
+    }
+  }
 }

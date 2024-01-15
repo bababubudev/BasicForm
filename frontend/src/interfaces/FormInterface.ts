@@ -1,7 +1,8 @@
-export interface InputParams {
+export interface InputParams
+extends Omit<React.InputHTMLAttributes<HTMLInputElement>, "id">
+{
   id: number;
+  label: string
   name: string;
-  type: "text" | "email" | "password" | "number";
-  placeholder: string;
-  autoComplete?: "true" | "false" | "null";
+  errors: string[];
 }

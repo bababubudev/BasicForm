@@ -2,13 +2,14 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import FormInput from "../components/FormInput";
 import { InputParams } from "../interfaces/FormInterface";
 
-export const USERNAME_REGEX = /^[a-zA-Z][a-zA-Z0-9-_]{3,23}$/;
-export const PASSWORD_REGEX = /^(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/
+export const USERNAME_REGEX = "^[a-zA-Z0-9_\\-]{3,16}$";
+export const PASSWORD_REGEX = "^(?=.*[A-Z])(?=.*[0-9])(?=.*\\W).{8,24}$"
 
 interface SignUpInterface {
 	username: string;
 	email: string;
 	password: string;
+	confirmPassword: string;
 	[key: string]: string;
 }
 
@@ -16,29 +17,64 @@ function UserActionPage() {
 	const [formValues, setFormValues] = useState<SignUpInterface>({
 		username: "",
 		email: "",
-		password: ""
+		password: "",
+		confirmPassword: "",
 	});
 
 	const inputObjects: InputParams[] = [
 		{
 			id: 1,
+			label: "Username",
 			name: "username",
 			type: "text",
 			placeholder: "Username",
-			autoComplete: "false",
+			pattern: USERNAME_REGEX,
+			autoComplete: "off",
+			autoFocus: true,
+			required: true,
+			errors: [
+				"Must be 3-16 characters",
+				"No Special characters",
+				"[ - ] or [ _ ] allowed"
+			],
 		},
 		{
 			id: 2,
+			label: "Email",
 			name: "email",
 			type: "email",
-			placeholder: "Email"
+			placeholder: "Email",
+			required: true,
+			errors: [
+				"Invalid email address"
+			],
 		},
 		{
 			id: 3,
+			label: "Password",
 			name: "password",
 			type: "password",
-			placeholder: "Password"
+			placeholder: "Password",
+			pattern: PASSWORD_REGEX,
+			required: true,
+			errors: [
+				"Must be 8-24 characters long",
+				"Must contain atleast one digit",
+				"Must contain atleast one special character",
+			],
 		},
+		{
+			id: 4,
+			label: "Confirm password",
+			name: "confirmPassword",
+			type: "password",
+			placeholder: "Confirm password",
+			pattern: formValues.password,
+			required: true,
+			errors: [
+				"Password doesn't match"
+			],
+		}
 	]
 
 	function handleSubmit(e: FormEvent<HTMLFormElement>): void {
@@ -57,6 +93,7 @@ function UserActionPage() {
 	return (
 		<div className="user-action">
 			<form onSubmit={handleSubmit}>
+				<h1 className="form-title">Create an account</h1>
 				{inputObjects.map((input) => (
 					<FormInput
 						key={input.id}
